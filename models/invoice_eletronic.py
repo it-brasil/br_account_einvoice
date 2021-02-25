@@ -346,10 +346,15 @@ class InvoiceEletronic(models.Model):
     @api.multi
     def _compute_legal_information(self):
         _logger.debug(self)
-        fiscal_ids = self.i filtered(
+        print("HERE BEGINS THE CODE")
+        print(self)
+        fiscal_ids = self.invoice_id.fiscal_observation_ids.filtered(
             lambda x: x.tipo == 'fiscal')
         obs_ids = self.invoice_id.fiscal_observation_ids.filtered(
             lambda x: x.tipo == 'observacao')
+        print("Fiscal IDs, then obs_ids")
+        print(fiscal_ids)
+        print(obs_ids)
         _logger.debug(fiscal_ids)
         _logger.debug(obs_ids)
 
@@ -367,6 +372,9 @@ class InvoiceEletronic(models.Model):
         
         _logger.debug(fiscal)
         _logger.debug(observacao)
+        print("Fiscal variable, then observacao")
+        print(fiscal)
+        print(observacao)
 
         self.informacoes_legais = fiscal
         self.informacoes_complementares = observacao
