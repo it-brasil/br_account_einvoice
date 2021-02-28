@@ -450,7 +450,41 @@ class InvoiceEletronic(models.Model):
     @api.multi
     def action_post_validate(self):
         _logger.info("invoice was postedl, now legal info is being called")
-        self._compute_legal_information()
+        #self._compute_legal_information()
+        _logger.info("HERE BEGINS THE CODE")
+        print("HERE BEGINS THE CODE")
+        print(self)
+        fiscal_ids = self.invoice_id.fiscal_observation_ids.filtered(
+            lambda x: x.tipo == 'fiscal')
+        obs_ids = self.invoice_id.fiscal_observation_ids.filtered(
+            lambda x: x.tipo == 'observacao')
+        print("Fiscal IDs, then obs_ids")
+        print(fiscal_ids)
+        print(obs_ids)
+        _logger.info(fiscal_ids)
+        _logger.info(obs_ids)
+
+        prod_obs_ids = self.env['br_account.fiscal.observation'].browse()
+        for item in self.invoice_id.invoice_line_ids:
+            prod_obs_ids |= item.product_id.fiscal_observation_ids
+
+        fiscal_ids |= prod_obs_ids.filtered(lambda x: x.tipo == 'fiscal')
+        obs_ids |= prod_obs_ids.filtered(lambda x: x.tipo == 'observacao')
+
+        fiscal = self._compute_msg(fiscal_ids) + (
+            self.invoice_id.fiscal_comment or '')
+        observacao = self._compute_msg(obs_ids) + (
+            self.invoice_id.comment or '')
+        
+        _logger.info("FISCAL, OBSERVACAO")
+        _logger.info(fiscal)
+        _logger.info(observacao)
+        print("Fiscal variable, then observacao")
+        print(fiscal)
+        print(observacao)
+
+        self.informacoes_legais = fiscal
+        self.informacoes_complementares = observacao
 
     @api.multi
     def _prepare_eletronic_invoice_item(self, item, invoice):
