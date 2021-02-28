@@ -57,6 +57,7 @@ class InvoiceEletronic(models.Model):
         u'Nome', size=100, required=True, readonly=True, states=STATE)
     company_id = fields.Many2one(
         'res.company', u'Empresa', readonly=True, states=STATE)
+    test_field = fields.Char()
     state = fields.Selection(
         [('draft', u'Provisório'),
          ('edit', 'Editar'),
@@ -429,6 +430,7 @@ class InvoiceEletronic(models.Model):
             result += render_result + '\n'
             _logger.debug(result)
         return result
+        _logger.debug(result)
 
     def _get_variables_msg(self):
         return {
@@ -449,6 +451,7 @@ class InvoiceEletronic(models.Model):
 
     @api.multi
     def action_post_validate(self):
+        _logger("COMPUTE LEGAL INFORMATION BEING PROCESSED")
         self._compute_legal_information()
 
     @api.multi
