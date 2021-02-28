@@ -430,7 +430,6 @@ class InvoiceEletronic(models.Model):
             result += render_result + '\n'
             _logger.debug(result)
         return result
-        _logger.debug(result)
 
     def _get_variables_msg(self):
         return {
@@ -451,7 +450,6 @@ class InvoiceEletronic(models.Model):
 
     @api.multi
     def action_post_validate(self):
-        #_logger.debug("COMPUTE LEGAL INFORMATION BEING PROCESSED")
         self._compute_legal_information()
 
     @api.multi
