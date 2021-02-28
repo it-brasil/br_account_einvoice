@@ -451,7 +451,7 @@ class InvoiceEletronic(models.Model):
 
     @api.multi
     def action_post_validate(self):
-        _logger("COMPUTE LEGAL INFORMATION BEING PROCESSED")
+        _logger.debug("COMPUTE LEGAL INFORMATION BEING PROCESSED")
         self._compute_legal_information()
 
     @api.multi
