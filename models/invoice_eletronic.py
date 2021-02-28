@@ -346,8 +346,7 @@ class InvoiceEletronic(models.Model):
 
     @api.multi
     def _compute_legal_information(self):
-        _logger.debug(self)
-        _logger.debug("HERE BEGINS THE CODE")
+        _logger.info("HERE BEGINS THE CODE")
         print("HERE BEGINS THE CODE")
         print(self)
         fiscal_ids = self.invoice_id.fiscal_observation_ids.filtered(
@@ -357,8 +356,8 @@ class InvoiceEletronic(models.Model):
         print("Fiscal IDs, then obs_ids")
         print(fiscal_ids)
         print(obs_ids)
-        _logger.debug(fiscal_ids)
-        _logger.debug(obs_ids)
+        _logger.info(fiscal_ids)
+        _logger.info(obs_ids)
 
         prod_obs_ids = self.env['br_account.fiscal.observation'].browse()
         for item in self.invoice_id.invoice_line_ids:
@@ -372,9 +371,9 @@ class InvoiceEletronic(models.Model):
         observacao = self._compute_msg(obs_ids) + (
             self.invoice_id.comment or '')
         
-        _logger.debug("FISCAL, OBSERVACAO")
-        _logger.debug(fiscal)
-        _logger.debug(observacao)
+        _logger.info("FISCAL, OBSERVACAO")
+        _logger.info(fiscal)
+        _logger.info(observacao)
         print("Fiscal variable, then observacao")
         print(fiscal)
         print(observacao)
@@ -428,7 +427,7 @@ class InvoiceEletronic(models.Model):
             variables = self._get_variables_msg()
             render_result = template.render(variables)
             result += render_result + '\n'
-            _logger.debug(result)
+            _logger.info(result)
         return result
 
     def _get_variables_msg(self):
