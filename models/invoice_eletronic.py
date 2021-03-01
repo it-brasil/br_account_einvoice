@@ -57,7 +57,6 @@ class InvoiceEletronic(models.Model):
         u'Nome', size=100, required=True, readonly=True, states=STATE)
     company_id = fields.Many2one(
         'res.company', u'Empresa', readonly=True, states=STATE)
-    test_field = fields.Char()
     state = fields.Selection(
         [('draft', u'Provisório'),
          ('edit', 'Editar'),
